@@ -4,9 +4,11 @@ import * as Yup from 'yup';
 import 'dotenv/config';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 import userView from '../views/user_view';
 import Users from '../models/Users';
+import mailer from '../modules/mailer';
 
 const secret = process.env.APP_SECRET as string;
 
@@ -97,4 +99,44 @@ export default {
         .json({ error: 'Erro ao tentar fazer o login' });
     }
   },
+
+  async validadeEmail(request: Request, response: Response) {
+    const { email } = request.body;
+
+    try {
+      const userRepository = getRepository(Users);
+
+      const userAlreadyExists = await userRepository.findOne({ email });
+
+      if (!userAlreadyExists)
+        return response.status(400).json({ error: 'Usuário não encontrado' });
+
+      const token = crypto.randomBytes(20).toString('hex');
+
+      const now = new Date();
+      now.setHours(now.getHours() + 1);
+
+      await userRepository.update(
+        { email },
+        { passwordResetToken: token, passwordResetExpires: String(now) }
+      );
+
+      const updatedUser = await userRepository.findOne({ email });
+
+      await mailer.sendMail({
+        from: 'Happy <app@happy.com>',
+        to: email,
+        subject: 'Recuperação de Senha',
+        text: `Link para recuperar senha: http://localhost:3000/recovery-password/${token}`,
+      });
+
+      return response.json(updatedUser);
+    } catch (error) {
+      console.log(error);
+
+      return response.json({ erro: 'Erro ao tentar recuperar a senha' });
+    }
+  },
+
+  async updatePassword(request: Request, response: Response) {},
 };

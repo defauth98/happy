@@ -15,4 +15,6 @@ routes.post('/orphanages', upload.array('images'), OrphangesController.create);
 routes.post('/users', AuthController.create);
 routes.post('/login', AuthController.loginUser);
 
+routes.post('/validade-email', AuthController.validadeEmail);
+
 export default routes;

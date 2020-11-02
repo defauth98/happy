@@ -17,10 +17,21 @@ export class createUsers1603918022929 implements MigrationInterface {
           {
             name: 'email',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'password',
             type: 'varchar',
+          },
+          {
+            name: 'passwordResetToken',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'passwordResetExpires',
+            type: 'varchar',
+            isNullable: true,
           },
         ],
       })
