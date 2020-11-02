@@ -4,11 +4,24 @@ import '../../styles/pages/login.css';
 
 import Aside from '../../components/Aside';
 import Input from '../../components/Input';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
+
+  const { signIn, user } = useAuth();
+
+  async function handleFormSubmit() {
+    await signIn(email, password, remember);
+
+    if (user) {
+      alert('Login efetuado com sucesso');
+    } else {
+      alert('Erro ao tentar fazer login');
+    }
+  }
 
   return (
     <div id="login-page">
@@ -38,12 +51,12 @@ export default function LoginPage() {
               />
               <label htmlFor="remenber">Lembrar-me</label>
             </div>
-            <a id="forget-password" href="#">
+            <a id="forget-password" href="/dashboard">
               Esqueci minha senha
             </a>
           </div>
 
-          <button>Entrar</button>
+          <button onClick={handleFormSubmit}>Entrar</button>
         </div>
       </main>
     </div>
