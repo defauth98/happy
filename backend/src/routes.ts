@@ -16,5 +16,6 @@ routes.post('/users', AuthController.create);
 routes.post('/login', AuthController.loginUser);
 
 routes.post('/validade-email', AuthController.validadeEmail);
+routes.post('/recovery-password', AuthController.recoveryPassword);
 
 export default routes;

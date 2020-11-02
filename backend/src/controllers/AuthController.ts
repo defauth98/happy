@@ -138,5 +138,35 @@ export default {
     }
   },
 
-  async updatePassword(request: Request, response: Response) {},
+  async recoveryPassword(request: Request, response: Response) {
+    const { password } = request.body;
+    const { token } = request.query;
+
+    const userRepository = getRepository(Users);
+
+    try {
+      await bcrypt.genSalt(saltRounds, function (err, salt) {
+        bcrypt.hash(password, salt, async function (err, hash) {
+          await userRepository.update(
+            { passwordResetToken: String(token) },
+            {
+              password: hash,
+              passwordResetToken: '',
+              passwordResetExpires: '',
+            }
+          );
+
+          return response
+            .status(200)
+            .json({ message: 'Sucesso ao mudar a senha' });
+        });
+      });
+    } catch (error) {
+      console.log(error);
+
+      return response
+        .status(400)
+        .json({ error: 'Não foi possivel mudar a senha do usuário' });
+    }
+  },
 };
