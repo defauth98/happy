@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import '../../styles/pages/validade-email.css';
 
 import Aside from '../../components/Aside';
 import Input from '../../components/Input';
-// import { useAuth } from '../../contexts/AuthContext';
+import api from '../../services/api';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [remember, setRemember] = useState(false);
+
+  const history = useHistory();
+
+  async function handleValidateEmail() {
+    const response = await api.post('/validade-email', { email });
+
+    if (String(response.status) === '200') {
+      history.push('/landing');
+    }
+  }
 
   return (
     <div id="validade-email-page">
@@ -25,7 +34,12 @@ export default function LoginPage() {
 
           <Input label="E-mail" value={email} setInput={setEmail} />
 
-          <button onClick={() => {}}>Entrar</button>
+          <button
+            className={email.length > 6 ? 'button-active' : ''}
+            onClick={handleValidateEmail}
+          >
+            Entrar
+          </button>
         </div>
       </main>
     </div>

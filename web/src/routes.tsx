@@ -17,7 +17,7 @@ function Routes() {
         <Route path="/validate-email" component={ValidadeEmail} />
         <Route path="/update-password" component={UpdatePassword} />
 
-        {/* <Route path="/" component={Landing} exact /> */}
+        <Route path="/landing" component={Landing} exact />
         <Route path="/app" component={OrphanagesMap} />
 
         <Route path="/orphanages/create" component={CreateOrphanage} />

@@ -47,6 +47,8 @@
 #validade-email-page main #main-container button {
   margin-top: 20px;
 
+  cursor: pointer;
+
   padding: 20px 20px;
   background: #37c77f;
   border: none;
@@ -54,4 +56,7 @@
   border-radius: 18px;
 
   opacity: 0.6;
+}
+#validade-email-page main #main-container .button-active {
+  opacity: 1;
 }
