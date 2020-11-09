@@ -87,4 +87,20 @@ export default {
     // Código de resposta para criado com sucesso
     return response.status(201).json(orphanage);
   },
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const orphanagesRepository = getRepository(Orphanages);
+
+    try {
+      await orphanagesRepository.delete(id);
+
+      response.json({ message: 'success' });
+    } catch (error) {
+      console.log(error);
+
+      response.json({ error: 'Erro ao tentar deletar um orfanato' });
+    }
+  },
 };
