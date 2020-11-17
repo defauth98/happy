@@ -1,0 +1,46 @@
+#orphanage-item {
+  flex: 1;
+  width: 100%;
+  height: 350px;
+
+  border-radius: 10px;
+  background-color: #fff;
+
+  border: 1px solid #d3e2e5;
+}
+
+#orphanage-item .map-container {
+  border-radius: 10px;
+}
+#orphanage-item .map-container .leaflet-container {
+  border-radius: 8px;
+  border: 1px solid #d3e2e5;
+}
+
+#orphanage-item .orphanage-info {
+  color: #4d6f80;
+  margin: 14px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+#orphanage-item .orphanage-info h1 {
+  font-size: 30px;
+}
+
+#orphanage-item .orphanage-info .buttons-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+}
+
+#orphanage-item .orphanage-info .buttons-container button {
+  background: #ebf2f5;
+  border: none;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
