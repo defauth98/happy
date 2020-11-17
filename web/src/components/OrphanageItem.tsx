@@ -7,13 +7,35 @@ import editIcon from '../images/edit.svg';
 import trashIcon from '../images/trash.svg';
 
 import '../styles/components/orphanage-item.css';
+import api from '../services/api';
 
-function OrphanageItem() {
+interface OrphanageItem {
+  orphanage: {
+    id: number;
+
+    latitude: number;
+    longitude: number;
+    name: String;
+  };
+  updateOrphanages(): void;
+}
+
+const OrphanageItem: React.FC<OrphanageItem> = ({
+  orphanage,
+  updateOrphanages,
+}) => {
+  function handleRemoveOrphanage() {
+    api.delete(`orphanages/${orphanage.id}`).then(() => {
+      alert('deletado com sucesso');
+      updateOrphanages();
+    });
+  }
+
   return (
     <div id="orphanage-item">
       <div className="map-container">
         <Map
-          center={[-24.5399833, -47.8723759]}
+          center={[orphanage.latitude, orphanage.longitude]}
           zoom={16}
           style={{ width: '100%', height: '280px' }}
           dragging={false}
@@ -28,12 +50,12 @@ function OrphanageItem() {
           <Marker
             interactive={false}
             icon={mapIcon}
-            position={[-24.5399833, -47.8723759]}
+            position={[orphanage.latitude, orphanage.longitude]}
           />
         </Map>
       </div>
       <div className="orphanage-info">
-        <h1>Orf. Esperança</h1>
+        <h1>{orphanage.name}</h1>
 
         <div className="buttons-container">
           <div className="edit-button">
@@ -42,7 +64,7 @@ function OrphanageItem() {
             </button>
           </div>
           <div className="trash-button">
-            <button>
+            <button onClick={handleRemoveOrphanage}>
               <img src={trashIcon} alt="Apagar" />
             </button>
           </div>
@@ -50,6 +72,6 @@ function OrphanageItem() {
       </div>
     </div>
   );
-}
+};
 
 export default OrphanageItem;

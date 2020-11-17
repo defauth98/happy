@@ -7,6 +7,8 @@
   background-color: #fff;
 
   border: 1px solid #d3e2e5;
+
+  overflow: hidden;
 }
 
 #orphanage-item .map-container {
@@ -23,6 +25,8 @@
 
   display: flex;
   justify-content: space-between;
+
+  overflow: hidden;
 }
 
 #orphanage-item .orphanage-info h1 {
@@ -43,4 +47,6 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
+  outline: none;
+  cursor: pointer;
 }
