@@ -9,6 +9,8 @@ const routes = Router();
 const upload = multer(uploadConfig);
 
 routes.get('/orphanages', OrphangesController.index);
+routes.get('/pending', OrphangesController.indexPending);
+routes.post('/accepted/:id', OrphangesController.acceptOrphanage);
 routes.get('/orphanages/:id', OrphangesController.show);
 routes.post('/orphanages', upload.array('images'), OrphangesController.create);
 routes.delete('/orphanages/:id', OrphangesController.delete);
@@ -18,7 +20,7 @@ routes.put(
   OrphangesController.update
 );
 
-routes.post('/users', AuthController.create);
+routes.post('/sign', AuthController.create);
 routes.post('/login', AuthController.loginUser);
 
 routes.post('/validade-email', AuthController.validadeEmail);

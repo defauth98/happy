@@ -11,9 +11,49 @@ export default {
 
     const orphanages = await orphanagesRepository.find({
       relations: ['images'],
+      where: {
+        accepted: true,
+      },
     });
 
     return response.json(orphanageView.renderMany(orphanages));
+  },
+
+  async indexPending(request: Request, response: Response) {
+    const orphanagesRepository = getRepository(Orphanages);
+
+    const orphanages = await orphanagesRepository.find({
+      relations: ['images'],
+      where: {
+        accepted: false,
+      },
+    });
+
+    return response.json(orphanageView.renderMany(orphanages));
+  },
+
+  async acceptOrphanage(request: Request, response: Response) {
+    const { id } = request.params;
+
+    try {
+      const orphanagesRepository = getRepository(Orphanages);
+
+      const orphanage = await orphanagesRepository.findOneOrFail(id, {
+        relations: ['images'],
+      });
+
+      if (orphanage) {
+        orphanage.accepted = true;
+      }
+
+      orphanage && (await orphanagesRepository.save(orphanage));
+
+      response.status(209).send();
+    } catch (error) {
+      response
+        .status(400)
+        .json({ message: 'Não foi possível aceitar o orfanato' });
+    }
   },
 
   async show(request: Request, response: Response) {
