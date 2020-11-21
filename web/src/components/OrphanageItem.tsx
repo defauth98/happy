@@ -8,6 +8,7 @@ import trashIcon from '../images/trash.svg';
 
 import '../styles/components/orphanage-item.css';
 import api from '../services/api';
+import { useHistory } from 'react-router-dom';
 
 interface OrphanageItem {
   orphanage: {
@@ -24,11 +25,17 @@ const OrphanageItem: React.FC<OrphanageItem> = ({
   orphanage,
   updateOrphanages,
 }) => {
+  const history = useHistory();
+
   function handleRemoveOrphanage() {
     api.delete(`orphanages/${orphanage.id}`).then(() => {
       alert('deletado com sucesso');
       updateOrphanages();
     });
+  }
+
+  function handleEditOrphanage() {
+    history.push(`edit/${orphanage.id}`);
   }
 
   return (
@@ -59,7 +66,7 @@ const OrphanageItem: React.FC<OrphanageItem> = ({
 
         <div className="buttons-container">
           <div className="edit-button">
-            <button>
+            <button onClick={handleEditOrphanage}>
               <img src={editIcon} alt="Editar" />
             </button>
           </div>
