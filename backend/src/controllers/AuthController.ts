@@ -108,7 +108,7 @@ export default {
 
       const userAlreadyExists = await userRepository.findOne({ email });
 
-      if (!userAlreadyExists)
+      if (!!userAlreadyExists === false)
         return response.status(400).json({ error: 'Usuário não encontrado' });
 
       const token = crypto.randomBytes(20).toString('hex');
@@ -130,11 +130,13 @@ export default {
         text: `Link para recuperar senha: http://localhost:3000/recovery-password/${token}`,
       });
 
-      return response.json(updatedUser);
+      return response.status(200).json(updatedUser);
     } catch (error) {
       console.log(error);
 
-      return response.json({ erro: 'Erro ao tentar recuperar a senha' });
+      return response
+        .status(400)
+        .json({ erro: 'Erro ao tentar recuperar a senha' });
     }
   },
 
