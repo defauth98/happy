@@ -80,6 +80,10 @@
   margin-bottom: 60px;
 }
 
+#edit-orphanage main #orphanage .images input[type='file'] {
+  display: none;
+}
+
 #edit-orphanage main #orphanage .images .images-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;

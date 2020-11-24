@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 import Sidebar from '../components/Sidebar';
 import Input from '../components/Input';
@@ -12,6 +18,7 @@ import mapIcon from '../utils/mapIcon';
 import api from '../services/api';
 
 import '../styles/pages/edit-orphanage.css';
+import { LeafletMouseEvent } from 'leaflet';
 
 interface Params {
   id: string;
@@ -41,9 +48,62 @@ function EditOrphanage() {
   const [instructions, setInstructions] = useState('');
   const [opening_hours, setOpeningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(false);
-  const [images, setImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
+
+  const [images, setImages] = useState<File[]>([]);
 
   const params = useParams<Params>();
+
+  const InputRef = useRef<HTMLInputElement>(null);
+
+  const history = useHistory();
+
+  function handleMapClick(event: LeafletMouseEvent) {
+    const { lat, lng } = event.latlng;
+
+    setLatitude(String(lat));
+    setLongitude(String(lng));
+  }
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    const data = new FormData();
+
+    data.append('name', name);
+    data.append('about', about);
+    data.append('latitude', String(latitude));
+    data.append('longitude', String(longitude));
+    data.append('instructions', instructions);
+    data.append('opening_hours', opening_hours);
+    data.append('open_on_weekends', String(open_on_weekends));
+
+    images.forEach((image) => {
+      data.append('images', image);
+    });
+
+    await api.put(`/orphanages/${params.id}`, data);
+
+    alert('Cadastro realizado com sucesso');
+
+    history.push('/app');
+  }
+
+  function handleSelectImage(event: ChangeEvent<HTMLInputElement>) {
+    if (!event.target.files) {
+      return;
+    }
+
+    const selectedImages = Array.from(event.target.files);
+
+    setImages(selectedImages);
+
+    const selectedImagesPreview = selectedImages.map((image) => {
+      return URL.createObjectURL(image);
+    });
+
+    setPreviewImages(selectedImagesPreview);
+  }
 
   useEffect(() => {
     api.get(`orphanages/${params.id}`).then((response) => {
@@ -59,6 +119,10 @@ function EditOrphanage() {
       setImages(response.data.images);
     });
   }, [params.id]);
+
+  function handleAddNewImage() {
+    if (InputRef) InputRef.current?.click();
+  }
 
   return (
     <div id="edit-orphanage">
@@ -81,6 +145,7 @@ function EditOrphanage() {
                 zoomControl={false}
                 scrollWheelZoom={false}
                 doubleClickZoom={false}
+                onClick={handleMapClick}
               >
                 <TileLayer
                   url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
@@ -96,8 +161,8 @@ function EditOrphanage() {
             </div>
           )}
 
-          <Input label="Nome" value={orphanage.name} setInput={() => {}} />
-          <Input label="Sobre" value={orphanage.about} setInput={() => {}} />
+          <Input label="Nome" value={name} setInput={setName} />
+          <Input label="Sobre" value={about} setInput={setAbout} />
 
           {orphanage.images && (
             <div className="images">
@@ -111,7 +176,25 @@ function EditOrphanage() {
                     <img src={image.url} alt={orphanage.name} />
                   </div>
                 ))}
-                <button id="add">
+                {previewImages &&
+                  previewImages.map((image) => {
+                    return (
+                      <div id="image" key={String(image)}>
+                        <button className="delete">
+                          <FiX color="#FF669D" size="20px" />
+                        </button>
+                        <img src={image} alt={orphanage.name} />
+                      </div>
+                    );
+                  })}
+                <button id="add" onClick={handleAddNewImage}>
+                  <input
+                    type="file"
+                    id="add-input"
+                    multiple
+                    onChange={handleSelectImage}
+                    ref={InputRef}
+                  />
                   <FiPlus color="#15B6D6" size="20px" />
                 </button>
               </div>
@@ -121,13 +204,13 @@ function EditOrphanage() {
           <h2>Visitação</h2>
           <Input
             label="Instruções"
-            value={orphanage.instructions}
-            setInput={() => {}}
+            value={instructions}
+            setInput={setInstructions}
           />
           <Input
             label="Horário das visitas"
-            value={orphanage.opening_hours}
-            setInput={() => {}}
+            value={opening_hours}
+            setInput={setOpeningHours}
           />
 
           <div id="open-on-weekends">
@@ -150,7 +233,9 @@ function EditOrphanage() {
               </button>
             </div>
           </div>
-          <button className="button-confirm">Confirmar</button>
+          <button className="button-confirm" onClick={handleSubmit}>
+            Confirmar
+          </button>
         </div>
       </main>
     </div>
