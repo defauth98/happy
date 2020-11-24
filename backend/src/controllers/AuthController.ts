@@ -144,6 +144,12 @@ export default {
     const { password } = request.body;
     const { token } = request.query;
 
+    if (!!token === false) {
+      return response
+        .status(400)
+        .json({ error: 'Não é possível alterar a senha sem um token' });
+    }
+
     const userRepository = getRepository(Users);
 
     try {

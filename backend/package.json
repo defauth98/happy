@@ -6,7 +6,9 @@
   "scripts": {
     "start": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "test": "NODE_ENV=test jest --detectOpenHandles"
+    "pretest": "ts-node-dev ./node_modules/typeorm/cli.js -c sqlite migration:run",
+    "test": "NODE_ENV=test jest",
+    "posttest": "ts-node-dev ./node_modules/typeorm/cli.js -c sqlite schema:drop"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
