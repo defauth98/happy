@@ -1,14 +1,14 @@
-#dashboard {
+#pending-orphanages {
   display: flex;
 
   height: 100%;
 }
 
-#dashboard aside {
+#pending-orphanages aside {
   width: 100px;
 }
 
-#dashboard main {
+#pending-orphanages main {
   margin-left: 100px;
 
   width: 100%;
@@ -20,7 +20,7 @@
   /* justify-content: center; */
 }
 
-#dashboard .header {
+#pending-orphanages .header {
   display: flex;
   justify-content: space-between;
 
@@ -31,12 +31,12 @@
   border-bottom: 2px solid #d3e2e5;
 }
 
-#dashboard .header h1,
+#pending-orphanages .header h1,
 p {
   color: #4d6f80;
 }
 
-#dashboard main .orphanages {
+#pending-orphanages main .orphanages {
   width: 80%;
 
   display: grid;

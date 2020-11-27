@@ -22,11 +22,11 @@ const OrphanageItem: React.FC<OrphanageItem> = ({ orphanage }) => {
   const history = useHistory();
 
   function handleViewOrphanage() {
-    // history.push(`edit/${orphanage.id}`);
+    history.push(`pending/${orphanage.id}`);
   }
 
   return (
-    <div id="orphanage-item">
+    <div id="orphanage-pending-item">
       <div className="map-container">
         <Map
           center={[orphanage.latitude, orphanage.longitude]}

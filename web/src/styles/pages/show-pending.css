@@ -1,0 +1,252 @@
+#show-pending {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#show-pending .app-sidebar {
+  width: 80px;
+}
+
+#show-pending main {
+  flex: 1;
+
+  width: 800px;
+
+  margin-left: 80px;
+  margin: 0 auto;
+
+  text-align: center;
+
+  margin-bottom: 60px;
+}
+
+#show-pending main h1 {
+  font-size: 20px;
+
+  color: #8fa7b2;
+
+  margin: 20px 0;
+}
+
+#show-pending main #orphanage {
+  background: #fff;
+  border-radius: 16px;
+
+  text-align: left;
+
+  padding: 40px 80px;
+  border: 1px solid #d3e2e5;
+}
+
+#show-pending main #orphanage > h2 {
+  color: #4d6f80;
+
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding-bottom: 5px;
+
+  border-bottom: 1px solid #d3e2e5;
+
+  font-size: 30px;
+}
+
+#show-pending main #orphanage .map-container {
+  border: 1px solid #dde3f0;
+  border-radius: 16px;
+  background: #f5f8fa;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+#show-pending main #orphanage .map-container .leaflet-container {
+  border-radius: 16px;
+}
+
+#show-pending main #orphanage .map-container h2 {
+  font-size: 18px;
+  color: #0089a5;
+  padding: 10px;
+
+  border-bottom: 0px;
+}
+
+#show-pending main #orphanage .input-block {
+  margin-bottom: 20px;
+}
+
+#show-pending main #orphanage .images {
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+
+#show-pending main #orphanage .images input[type='file'] {
+  display: none;
+}
+
+#show-pending main #orphanage .images .images-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+#show-pending main #orphanage .images .images-grid #image {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+#show-pending main #orphanage .images .images-grid #image .delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  border-top-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+
+  width: 30px;
+  height: 30px;
+
+  background: #fff;
+
+  border: 1px solid #d3e2e5;
+
+  color: red;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+#show-pending main #orphanage .images .images-grid button#add {
+  width: 100px;
+  height: 100px;
+
+  border-radius: 24px;
+
+  border: 1px dashed #96d2f0;
+  cursor: pointer;
+
+  outline: none;
+}
+
+#show-pending main #orphanage .images h2 {
+  color: #8fa7b2;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#show-pending main #orphanage img {
+  width: 100px;
+  height: 100px;
+
+  border-radius: 24px;
+}
+
+#show-pending main #orphanage #open-on-weekends {
+  width: '100%';
+}
+
+#show-pending main #orphanage #open-on-weekends h3 {
+  color: #8fa7b2;
+
+  font-weight: normal;
+  font-size: 24px;
+
+  margin: 10px;
+}
+
+#show-pending main #orphanage #open-on-weekends #buttons {
+  display: flex;
+}
+
+#show-pending main #orphanage #open-on-weekends #buttons .button {
+  height: 50px;
+
+  border: 1px solid #d3e2e5;
+
+  outline: none;
+}
+
+#show-pending main #orphanage #open-on-weekends #buttons .active {
+  border: 1px solid #a1e9c5;
+  color: #37c77f;
+
+  background: #edfff6;
+}
+
+#show-pending main #orphanage #open-on-weekends #buttons #yes {
+  flex: 1;
+
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+}
+
+#show-pending main #orphanage #open-on-weekends #buttons #no {
+  flex: 1;
+
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+#show-pending main #orphanage .button-confirm {
+  width: 100%;
+
+  margin: 40px 0;
+  height: 60px;
+
+  border: none;
+  border-radius: 14px;
+  background: #37c77f;
+
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+#show-pending main .buttons-container {
+  margin-top: -10px;
+
+  width: 100%;
+  height: 130px;
+  background: #f5f8fa;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  border: 1px solid #d3e2e5;
+}
+
+#show-pending main .buttons-container .button {
+  height: 50px;
+  width: 250px;
+  margin: 10px;
+
+  border-radius: 14px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#show-pending main .buttons-container .button img {
+  margin: 10px;
+}
+
+#show-pending main .buttons-container #decline {
+  background: #ff669d;
+}
+
+#show-pending main .buttons-container #accept {
+  background: #3cdc8c;
+}

@@ -12,6 +12,7 @@ import CreateOrphanage from './pages/CreateOrphanage';
 import Dashboard from './pages/Dashboard';
 import EditPage from './pages/EditOrphanage';
 import PendingOrphanages from './pages/PendingOrphanages';
+import ShowPendingOrphanage from './pages/ShowPendingOrphanage';
 
 function Routes() {
   return (
@@ -28,8 +29,9 @@ function Routes() {
 
         <Route path="/login" component={LoginPage} />
         <Route path="/dashboard" exact component={Dashboard} />
-        <Route path="/" exact component={PendingOrphanages} />
+        <Route path="/pending" exact component={PendingOrphanages} />
         <Route path="/edit/:id" component={EditPage} />
+        <Route path="/pending/:id" component={ShowPendingOrphanage} />
       </Switch>
     </BrowserRouter>
   );

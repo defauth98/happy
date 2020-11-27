@@ -13,7 +13,7 @@ interface OrphanageItemProps {
   name: string;
 }
 
-function Dashboard() {
+function PendingOrphanages() {
   const [orphanages, setOrphanages] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function Dashboard() {
   }
 
   return (
-    <div id="dashboard">
+    <div id="pending-orphanages">
       <Sidebar />
       <main>
         <div className="header">
@@ -47,4 +47,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default PendingOrphanages;

@@ -48,7 +48,7 @@ export default {
 
       orphanage && (await orphanagesRepository.save(orphanage));
 
-      response.status(209).send();
+      response.status(200).send();
     } catch (error) {
       response
         .status(400)
