@@ -14,6 +14,7 @@ import EditPage from './pages/EditOrphanage';
 import PendingOrphanages from './pages/PendingOrphanages';
 import ShowPendingOrphanage from './pages/ShowPendingOrphanage';
 import CreateSucessPage from './pages/CreateSucess';
+import ConfirmDelete from './pages/ConfirmDelete';
 
 function Routes() {
   return (
@@ -23,11 +24,12 @@ function Routes() {
         <Route path="/update-password" component={UpdatePassword} />
 
         <Route path="/landing" component={Landing} exact />
-        <Route path="/app" component={OrphanagesMap} />
+        <Route path="/" component={OrphanagesMap} />
 
         <Route path="/orphanages/create" component={CreateOrphanage} />
         <Route path="/orphanages/:id" component={Orphanage} />
         <Route path="/success" component={CreateSucessPage} />
+        <Route path="/confirm-delete" component={ConfirmDelete} />
 
         <Route path="/login" component={LoginPage} />
         <Route path="/dashboard" exact component={Dashboard} />

@@ -7,7 +7,7 @@ import '../styles/pages/create-success.css';
 function CreateSucesspage() {
   return (
     <div id="create-succes-page">
-      <main>
+      <main className="main-container">
         <h1>Ebaaa!</h1>
         <p>
           O cadastro deu certo e foi enviado ao administrador para ser aprovado.
@@ -15,7 +15,7 @@ function CreateSucesspage() {
         <p>Agora é só esperar :)</p>
         <button>Voltar para o mapa</button>
       </main>
-      <aside>
+      <aside id="aside">
         <img src={PeopleIcon} alt="" />
       </aside>
     </div>

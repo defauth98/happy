@@ -1,13 +1,13 @@
-#create-succes-page {
+#confirm-delete {
   width: 100vw;
   height: 100vh;
 
   display: flex;
-  background: #37c77f;
+  background: #ff669d;
 }
 
-#create-succes-page #main-container {
-  background: #37c77f;
+#confirm-delete main {
+  background: #ff669d;
 
   display: flex;
   flex-direction: column;
@@ -17,13 +17,17 @@
   margin-left: 300px;
 }
 
-#create-succes-page #main-container h1 {
+#confirm-delete aside {
+  background: #ff669d;
+}
+
+#confirm-delete main h1 {
   color: #fff;
 
   font-size: 80px;
 }
 
-#create-succes-page #main-container p {
+#confirm-delete main p {
   color: #fff;
 
   font-size: 20px;
@@ -32,7 +36,7 @@
   text-align: center;
 }
 
-#create-succes-page #main-container button {
+#confirm-delete main button {
   margin: 40px;
 
   height: 50px;
@@ -41,17 +45,12 @@
   border-radius: 8px;
   border: 0;
 
-  background: #31b272;
+  background: #d6487b;
   color: #fff;
 
   cursor: pointer;
 }
 
-#create-succes-page #main-container button:hover {
-  background: #3bd689;
-}
-
-#create-succes-page #aside {
-  background: #37c77f;
-  margin-right: 200px;
+#confirm-delete main button:hover {
+  opacity: 0.6;
 }
