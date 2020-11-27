@@ -155,11 +155,11 @@ export default {
     try {
       const orphanagesRepository = getRepository(Orphanages);
 
-      const requestImages = request.files as Express.Multer.File[];
+      // const requestImages = request.files as Express.Multer.File[];
 
-      const images = requestImages.map((image) => {
-        return { path: image.filename };
-      });
+      // const images = requestImages.map((image) => {
+      //   return { path: image.filename };
+      // });
 
       const data = {
         name,
@@ -169,7 +169,7 @@ export default {
         instructions,
         opening_hours,
         open_on_weekends: open_on_weekends === true,
-        images,
+        // images,
       };
 
       const schema = Yup.object().shape({
@@ -180,11 +180,11 @@ export default {
         instructions: Yup.string().required(),
         opening_hours: Yup.string().required(),
         open_on_weekends: Yup.boolean().required(),
-        images: Yup.array(
-          Yup.object().shape({
-            path: Yup.string().required(),
-          })
-        ).required(),
+        // images: Yup.array(
+        //   Yup.object().shape({
+        //     path: Yup.string().required(),
+        //   })
+        // ).required(),
       });
 
       await schema.validate(data, {
@@ -204,9 +204,10 @@ export default {
         orphanage.open_on_weekends = data.open_on_weekends;
         orphanage.opening_hours = data.opening_hours;
 
-        orphanage.images.map((image, index) => {
-          image.path = data.images[index].path;
-        });
+        // orphanage.images &&
+        //   orphanage.images.map((image, index) => {
+        //     image.path = data.images[index].path;
+        //   });
       }
 
       orphanage && (await orphanagesRepository.save(orphanage));

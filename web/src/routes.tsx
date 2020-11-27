@@ -11,6 +11,7 @@ import Orphanage from './pages/Orphanage';
 import CreateOrphanage from './pages/CreateOrphanage';
 import Dashboard from './pages/Dashboard';
 import EditPage from './pages/EditOrphanage';
+import PendingOrphanages from './pages/PendingOrphanages';
 
 function Routes() {
   return (
@@ -26,7 +27,8 @@ function Routes() {
         <Route path="/orphanages/:id" component={Orphanage} />
 
         <Route path="/login" component={LoginPage} />
-        <Route path="/" exact component={Dashboard} />
+        <Route path="/dashboard" exact component={Dashboard} />
+        <Route path="/" exact component={PendingOrphanages} />
         <Route path="/edit/:id" component={EditPage} />
       </Switch>
     </BrowserRouter>
