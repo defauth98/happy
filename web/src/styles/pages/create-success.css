@@ -1,0 +1,57 @@
+#create-succes-page {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  background: #37c77f;
+}
+
+#create-succes-page main {
+  background: #37c77f;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 300px;
+}
+
+#create-succes-page main h1 {
+  color: #fff;
+
+  font-size: 80px;
+}
+
+#create-succes-page main p {
+  color: #fff;
+
+  font-size: 20px;
+  width: 55%;
+
+  text-align: center;
+}
+
+#create-succes-page main button {
+  margin: 40px;
+
+  height: 50px;
+  width: 250px;
+
+  border-radius: 8px;
+  border: 0;
+
+  background: #31b272;
+  color: #fff;
+
+  cursor: pointer;
+}
+
+#create-succes-page main button:hover {
+  background: #3bd689;
+}
+
+#create-succes-page aside {
+  background: #37c77f;
+  margin-right: 200px;
+}

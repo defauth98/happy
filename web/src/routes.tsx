@@ -13,6 +13,7 @@ import Dashboard from './pages/Dashboard';
 import EditPage from './pages/EditOrphanage';
 import PendingOrphanages from './pages/PendingOrphanages';
 import ShowPendingOrphanage from './pages/ShowPendingOrphanage';
+import CreateSucessPage from './pages/CreateSucess';
 
 function Routes() {
   return (
@@ -26,6 +27,7 @@ function Routes() {
 
         <Route path="/orphanages/create" component={CreateOrphanage} />
         <Route path="/orphanages/:id" component={Orphanage} />
+        <Route path="/success" component={CreateSucessPage} />
 
         <Route path="/login" component={LoginPage} />
         <Route path="/dashboard" exact component={Dashboard} />
