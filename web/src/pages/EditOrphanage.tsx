@@ -82,11 +82,11 @@ function EditOrphanage() {
       data.append('images', image);
     });
 
-    await api.put(`/orphanages/${params.id}`, data);
+    console.log(images);
 
-    alert('Cadastro realizado com sucesso');
+    const response = await api.put(`/orphanages/${params.id}`, data);
 
-    history.push('/app');
+    // history.push('/app');
   }
 
   function handleSelectImage(event: ChangeEvent<HTMLInputElement>) {
