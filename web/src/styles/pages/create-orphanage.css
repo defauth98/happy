@@ -6,6 +6,10 @@
   flex: 1;
 }
 
+#page-create-orphanage main aside {
+  width: 80px;
+}
+
 form.create-orphanage-form {
   width: 700px;
   margin: 64px auto;

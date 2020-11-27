@@ -7,6 +7,10 @@
   flex: 1;
 }
 
+#page-orphanage aside {
+  width: 80px;
+}
+
 .orphanage-details {
   width: 700px;
   margin: 64px auto;
