@@ -215,7 +215,9 @@ export default {
     } catch (error) {
       console.log(error);
 
-      response.json({ message: 'Erro ao tentar dar update no orfanato' });
+      response
+        .status(400)
+        .json({ message: 'Erro ao tentar dar update no orfanato' });
     }
   },
 };
