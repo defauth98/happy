@@ -1,14 +1,14 @@
-import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-import * as Yup from 'yup';
-import 'dotenv/config';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
+import { Request, Response } from "express";
+import { getRepository } from "typeorm";
+import * as Yup from "yup";
+import "dotenv/config";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
-import userView from '../views/user_view';
-import Users from '../models/Users';
-import mailer from '../modules/mailer';
+import userView from "../views/user_view";
+import Users from "../models/Users";
+import mailer from "../modules/mailer";
 
 const secret = process.env.APP_SECRET as string;
 
@@ -59,7 +59,7 @@ export default {
       console.log(error.message);
 
       return response.status(400).json({
-        message: 'Erro ao criar usuario',
+        message: "Erro ao criar usuario",
       });
     }
   },
@@ -73,7 +73,7 @@ export default {
       const userAlreadyExists = await userRepository.findOne({ email });
 
       if (!userAlreadyExists?.email) {
-        return response.status(400).json({ error: 'Email não existe' });
+        return response.status(400).json({ error: "Email não existe" });
       }
 
       const userPassword = userAlreadyExists.password;
@@ -88,7 +88,7 @@ export default {
         } else {
           return response
             .status(400)
-            .json({ error: 'Informe uma nova correta' });
+            .json({ error: "Informe uma nova correta" });
         }
       });
     } catch (error) {
@@ -96,7 +96,7 @@ export default {
 
       return response
         .status(400)
-        .json({ error: 'Erro ao tentar fazer o login' });
+        .json({ error: "Erro ao tentar fazer o login" });
     }
   },
 
@@ -109,9 +109,9 @@ export default {
       const userAlreadyExists = await userRepository.findOne({ email });
 
       if (!!userAlreadyExists === false)
-        return response.status(400).json({ error: 'Usuário não encontrado' });
+        return response.status(400).json({ error: "Usuário não encontrado" });
 
-      const token = crypto.randomBytes(20).toString('hex');
+      const token = crypto.randomBytes(20).toString("hex");
 
       const now = new Date();
       now.setHours(now.getHours() + 1);
@@ -124,9 +124,9 @@ export default {
       const updatedUser = await userRepository.findOne({ email });
 
       await mailer.sendMail({
-        from: 'Happy <app@happy.com>',
+        from: "Happy <app@happy.com>",
         to: email,
-        subject: 'Recuperação de Senha',
+        subject: "Recuperação de Senha",
         text: `Link para recuperar senha: http://localhost:3000/recovery-password/${token}`,
       });
 
@@ -136,7 +136,7 @@ export default {
 
       return response
         .status(400)
-        .json({ erro: 'Erro ao tentar recuperar a senha' });
+        .json({ erro: "Erro ao tentar recuperar a senha" });
     }
   },
 
@@ -147,7 +147,7 @@ export default {
     if (!!token === false) {
       return response
         .status(400)
-        .json({ error: 'Não é possível alterar a senha sem um token' });
+        .json({ error: "Não é possível alterar a senha sem um token" });
     }
 
     const userRepository = getRepository(Users);
@@ -159,14 +159,14 @@ export default {
             { passwordResetToken: String(token) },
             {
               password: hash,
-              passwordResetToken: '',
-              passwordResetExpires: '',
+              passwordResetToken: "",
+              passwordResetExpires: "",
             }
           );
 
           return response
             .status(200)
-            .json({ message: 'Sucesso ao mudar a senha' });
+            .json({ message: "Sucesso ao mudar a senha" });
         });
       });
     } catch (error) {
@@ -174,7 +174,7 @@ export default {
 
       return response
         .status(400)
-        .json({ error: 'Não foi possivel mudar a senha do usuário' });
+        .json({ error: "Não foi possivel mudar a senha do usuário" });
     }
   },
 };

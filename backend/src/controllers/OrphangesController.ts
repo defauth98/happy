@@ -1,9 +1,12 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, createConnection, getConnection } from 'typeorm';
 import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
+import fs from 'fs';
+import path from 'path';
 
 import Orphanages from '../models/Orphanages';
+import Images from '../models/Images';
 
 export default {
   async index(request: Request, response: Response) {
@@ -148,18 +151,20 @@ export default {
       instructions,
       opening_hours,
       open_on_weekends,
+      accepted,
     } = request.body;
 
     const { id } = request.params;
 
     try {
       const orphanagesRepository = getRepository(Orphanages);
+      const imagesRepository = getRepository(Images);
 
-      // const requestImages = request.files as Express.Multer.File[];
+      const requestImages = request.files as Express.Multer.File[];
 
-      // const images = requestImages.map((image) => {
-      //   return { path: image.filename };
-      // });
+      const images = requestImages.map((image) => {
+        return { path: image.filename };
+      });
 
       const data = {
         name,
@@ -169,7 +174,7 @@ export default {
         instructions,
         opening_hours,
         open_on_weekends: open_on_weekends === true,
-        // images,
+        accepted,
       };
 
       const schema = Yup.object().shape({
@@ -180,39 +185,37 @@ export default {
         instructions: Yup.string().required(),
         opening_hours: Yup.string().required(),
         open_on_weekends: Yup.boolean().required(),
-        // images: Yup.array(
-        //   Yup.object().shape({
-        //     path: Yup.string().required(),
-        //   })
-        // ).required(),
+        accepted: Yup.boolean().required(),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
 
-      const orphanage = await orphanagesRepository.findOneOrFail(id, {
+      const orphanage = await orphanagesRepository.findOneOrFail(id);
+
+      const imagesWillBeAdd = images.map((image) => ({
+        path: image.path,
+        orphanage,
+      }));
+
+      const oldImages = await imagesRepository.find({ orphanage });
+
+      oldImages.forEach((image) => {
+        fs.unlinkSync(
+          path.resolve(__dirname, '..', '..', 'uploads', image.path)
+        );
+      });
+
+      await imagesRepository.delete({ orphanage });
+      await imagesRepository.insert(imagesWillBeAdd);
+      await orphanagesRepository.update(data, orphanage);
+
+      const newOrphanage = await orphanagesRepository.findOneOrFail(id, {
         relations: ['images'],
       });
 
-      if (orphanage) {
-        orphanage.name = data.name;
-        orphanage.latitude = data.latitude;
-        orphanage.longitude = data.longitude;
-        orphanage.about = data.about;
-        orphanage.instructions = data.instructions;
-        orphanage.open_on_weekends = data.open_on_weekends;
-        orphanage.opening_hours = data.opening_hours;
-
-        // orphanage.images &&
-        //   orphanage.images.map((image, index) => {
-        //     image.path = data.images[index].path;
-        //   });
-      }
-
-      orphanage && (await orphanagesRepository.save(orphanage));
-
-      response.json({ orphanage });
+      response.status(200).json(newOrphanage);
     } catch (error) {
       console.log(error);
 
