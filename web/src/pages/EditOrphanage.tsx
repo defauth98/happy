@@ -49,13 +49,11 @@ function EditOrphanage() {
   const [opening_hours, setOpeningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(false);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [accepted, setAccept] = useState();
 
   const [images, setImages] = useState<File[]>([]);
-
   const params = useParams<Params>();
-
   const InputRef = useRef<HTMLInputElement>(null);
-
   const history = useHistory();
 
   function handleMapClick(event: LeafletMouseEvent) {
@@ -77,16 +75,19 @@ function EditOrphanage() {
     data.append('instructions', instructions);
     data.append('opening_hours', opening_hours);
     data.append('open_on_weekends', String(open_on_weekends));
+    data.append('accepted', String(accepted));
 
     images.forEach((image) => {
       data.append('images', image);
     });
 
-    console.log(images);
-
     const response = await api.put(`/orphanages/${params.id}`, data);
 
-    // history.push('/app');
+    if (response.status === 400) {
+      alert('Erro ao tentar da update');
+    }
+
+    history.push('/dashboard');
   }
 
   function handleSelectImage(event: ChangeEvent<HTMLInputElement>) {
@@ -117,6 +118,7 @@ function EditOrphanage() {
       setOpenOnWeekends(response.data.open_on_weekends);
       setOpeningHours(response.data.opening_hours);
       setImages(response.data.images);
+      setAccept(response.data.accepted);
     });
   }, [params.id]);
 

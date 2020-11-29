@@ -24,16 +24,16 @@ function Routes() {
         <Route path="/update-password" component={UpdatePassword} />
 
         <Route path="/landing" component={Landing} exact />
-        <Route path="/" component={OrphanagesMap} />
+        <Route path="/app" exact component={OrphanagesMap} />
 
         <Route path="/orphanages/create" component={CreateOrphanage} />
         <Route path="/orphanages/:id" component={Orphanage} />
         <Route path="/success" component={CreateSucessPage} />
-        <Route path="/confirm-delete" component={ConfirmDelete} />
+        <Route path="/confirm-delete/:id" component={ConfirmDelete} />
 
         <Route path="/login" component={LoginPage} />
-        <Route path="/dashboard" exact component={Dashboard} />
-        <Route path="/pending" exact component={PendingOrphanages} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/pending" component={PendingOrphanages} />
         <Route path="/edit/:id" component={EditPage} />
         <Route path="/pending/:id" component={ShowPendingOrphanage} />
       </Switch>

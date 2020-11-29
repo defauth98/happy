@@ -1,19 +1,19 @@
-import { Request, Response } from 'express';
-import { getRepository, createConnection, getConnection } from 'typeorm';
-import orphanageView from '../views/orphanages_view';
-import * as Yup from 'yup';
-import fs from 'fs';
-import path from 'path';
+import { Request, Response } from "express";
+import { getRepository, createConnection, getConnection } from "typeorm";
+import orphanageView from "../views/orphanages_view";
+import * as Yup from "yup";
+import fs from "fs";
+import path from "path";
 
-import Orphanages from '../models/Orphanages';
-import Images from '../models/Images';
+import Orphanages from "../models/Orphanages";
+import Images from "../models/Images";
 
 export default {
   async index(request: Request, response: Response) {
     const orphanagesRepository = getRepository(Orphanages);
 
     const orphanages = await orphanagesRepository.find({
-      relations: ['images'],
+      relations: ["images"],
       where: {
         accepted: true,
       },
@@ -26,7 +26,7 @@ export default {
     const orphanagesRepository = getRepository(Orphanages);
 
     const orphanages = await orphanagesRepository.find({
-      relations: ['images'],
+      relations: ["images"],
       where: {
         accepted: false,
       },
@@ -42,7 +42,7 @@ export default {
       const orphanagesRepository = getRepository(Orphanages);
 
       const orphanage = await orphanagesRepository.findOneOrFail(id, {
-        relations: ['images'],
+        relations: ["images"],
       });
 
       if (orphanage) {
@@ -55,7 +55,7 @@ export default {
     } catch (error) {
       response
         .status(400)
-        .json({ message: 'Não foi possível aceitar o orfanato' });
+        .json({ message: "Não foi possível aceitar o orfanato" });
     }
   },
 
@@ -65,7 +65,7 @@ export default {
     const orphanagesRepository = getRepository(Orphanages);
 
     const orphanage = await orphanagesRepository.findOneOrFail(id, {
-      relations: ['images'],
+      relations: ["images"],
     });
 
     return response.json(orphanageView.render(orphanage));
@@ -134,11 +134,11 @@ export default {
     try {
       await orphanagesRepository.delete(id);
 
-      response.json({ message: 'success' });
+      response.json({ message: "success" });
     } catch (error) {
       console.log(error);
 
-      response.json({ error: 'Erro ao tentar deletar um orfanato' });
+      response.json({ error: "Erro ao tentar deletar um orfanato" });
     }
   },
 
@@ -185,7 +185,6 @@ export default {
         instructions: Yup.string().required(),
         opening_hours: Yup.string().required(),
         open_on_weekends: Yup.boolean().required(),
-        accepted: Yup.boolean().required(),
       });
 
       await schema.validate(data, {
@@ -203,16 +202,16 @@ export default {
 
       oldImages.forEach((image) => {
         fs.unlinkSync(
-          path.resolve(__dirname, '..', '..', 'uploads', image.path)
+          path.resolve(__dirname, "..", "..", "uploads", image.path)
         );
       });
 
       await imagesRepository.delete({ orphanage });
       await imagesRepository.insert(imagesWillBeAdd);
-      await orphanagesRepository.update(data, orphanage);
+      await orphanagesRepository.update(id, data);
 
       const newOrphanage = await orphanagesRepository.findOneOrFail(id, {
-        relations: ['images'],
+        relations: ["images"],
       });
 
       response.status(200).json(newOrphanage);
@@ -221,7 +220,7 @@ export default {
 
       response
         .status(400)
-        .json({ message: 'Erro ao tentar dar update no orfanato' });
+        .json({ message: "Erro ao tentar dar update no orfanato" });
     }
   },
 };
