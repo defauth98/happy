@@ -56,6 +56,22 @@ function EditOrphanage() {
   const InputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
+  function handleDeleteImageFromOrphanage(index: number) {
+    const oldImages = images;
+
+    if (oldImages[index]) {
+      const newImagesArray = oldImages.splice(index, 1);
+
+      setImages(newImagesArray);
+    }
+  }
+
+  function handleDeleteImageFromPreview(index: number) {
+    // let oldPreviewImages = previewImages;
+    // oldPreviewImages.splice(index, 1);
+    // setPreviewImages(oldPreviewImages);
+  }
+
   function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
 
@@ -107,8 +123,6 @@ function EditOrphanage() {
     const oldPreviewImages = previewImages;
 
     oldPreviewImages.push(selectedImagesPreview.toString());
-
-    // console.log(oldPreviewImages);
 
     setPreviewImages(oldPreviewImages);
   }
@@ -177,19 +191,25 @@ function EditOrphanage() {
             <div className="images">
               <h2>Fotos</h2>
               <div className="images-grid">
-                {orphanage.images.map((image) => (
+                {orphanage.images.map((image, index) => (
                   <div id="image" key={image.id}>
-                    <button className="delete">
+                    <button
+                      className="delete"
+                      onClick={() => handleDeleteImageFromOrphanage(index)}
+                    >
                       <FiX color="#FF669D" size="20px" />
                     </button>
                     <img src={image.url} alt={orphanage.name} />
                   </div>
                 ))}
                 {previewImages &&
-                  previewImages.map((image) => {
+                  previewImages.map((image, index) => {
                     return (
                       <div id="image" key={String(image)}>
-                        <button className="delete">
+                        <button
+                          className="delete"
+                          onClick={() => handleDeleteImageFromPreview(index)}
+                        >
                           <FiX color="#FF669D" size="20px" />
                         </button>
                         <img src={image} alt={orphanage.name} />
