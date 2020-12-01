@@ -23,7 +23,7 @@ function Routes() {
         <Route path="/validate-email" component={ValidadeEmail} />
         <Route path="/update-password" component={UpdatePassword} />
 
-        <Route path="/landing" component={Landing} exact />
+        <Route path="/" component={Landing} exact />
         <Route path="/app" exact component={OrphanagesMap} />
 
         <Route path="/orphanages/create" component={CreateOrphanage} />
@@ -35,7 +35,7 @@ function Routes() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/pending" component={PendingOrphanages} />
         <Route path="/edit/:id" component={EditPage} />
-        <Route path="/pending/:id" component={ShowPendingOrphanage} />
+        <Route path="/accept/:id" component={ShowPendingOrphanage} />
       </Switch>
     </BrowserRouter>
   );

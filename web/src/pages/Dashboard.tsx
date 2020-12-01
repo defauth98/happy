@@ -29,8 +29,8 @@ function Dashboard() {
       <Sidebar />
       <main>
         <div className="header">
-          <h1>Orfanatos Cadastrados</h1>
-          <p>2 orfanatos</p>
+          <h1 className="title">Orfanatos Cadastrados</h1>
+          <p className="right-title"> 2 orfanatos</p>
         </div>
 
         <div className="orphanages">

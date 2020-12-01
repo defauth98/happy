@@ -31,9 +31,12 @@
   border-bottom: 2px solid #d3e2e5;
 }
 
-#dashboard .header h1,
-p {
+#dashboard .header .title {
   color: #4d6f80;
+}
+
+#dashboard .header .right-title {
+  color: #8fa7b2;
 }
 
 #dashboard main .orphanages {

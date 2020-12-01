@@ -11,15 +11,15 @@
   overflow: hidden;
 }
 
-#orphanagepending--item .map-container {
+#orphanage-pending-item .map-container {
   border-radius: 10px;
 }
-#orphanagepending--item .map-container .leaflet-container {
+#orphanage-pending-item .map-container .leaflet-container {
   border-radius: 8px;
   border: 1px solid #d3e2e5;
 }
 
-#orphanagepending--item .orphanage-info {
+#orphanage-pending-item .orphanage-info {
   color: #4d6f80;
   margin: 14px;
 
@@ -29,17 +29,17 @@
   overflow: hidden;
 }
 
-#orphanagepending--item .orphanage-info h1 {
+#orphanage-pending-item .orphanage-info h1 {
   font-size: 30px;
 }
 
-#orphanagepending--item .orphanage-info .buttons-container {
+#orphanage-pending-item .orphanage-info .buttons-container {
   display: flex;
   justify-content: space-between;
   width: 50px;
 }
 
-#orphanagepending--item .orphanage-info .buttons-container button {
+#orphanage-pending-item .orphanage-info .buttons-container button {
   background: #ebf2f5;
   border: none;
   padding: 8px;

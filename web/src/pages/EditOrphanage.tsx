@@ -48,29 +48,34 @@ function EditOrphanage() {
   const [instructions, setInstructions] = useState('');
   const [opening_hours, setOpeningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(false);
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [accepted, setAccept] = useState();
+  const [deletedImagesId, setDeletedImagesId] = useState<string[]>([]);
 
-  const [images, setImages] = useState<File[]>([]);
+  const [imagesFiles, setImagesFiles] = useState<File[]>([]);
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [images, setImages] = useState<Array<{ id: string; url: string }>>([]);
+
   const params = useParams<Params>();
+
   const InputRef = useRef<HTMLInputElement>(null);
+
   const history = useHistory();
 
-  function handleDeleteImageFromOrphanage(index: number) {
-    const oldImages = images;
+  useEffect(() => {
+    api.get(`orphanages/${params.id}`).then((response) => {
+      setOrphanage(response.data);
 
-    if (oldImages[index]) {
-      const newImagesArray = oldImages.splice(index, 1);
-
-      setImages(newImagesArray);
-    }
-  }
-
-  function handleDeleteImageFromPreview(index: number) {
-    // let oldPreviewImages = previewImages;
-    // oldPreviewImages.splice(index, 1);
-    // setPreviewImages(oldPreviewImages);
-  }
+      setLatitude(response.data.latitude);
+      setLongitude(response.data.longitude);
+      setName(response.data.name);
+      setAbout(response.data.about);
+      setInstructions(response.data.instructions);
+      setOpenOnWeekends(response.data.open_on_weekends);
+      setImages(response.data.images);
+      setOpeningHours(response.data.opening_hours);
+      setAccept(response.data.accepted);
+    });
+  }, [params.id]);
 
   function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
@@ -82,7 +87,6 @@ function EditOrphanage() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    console.log(accepted);
     const data = new FormData();
 
     data.append('name', name);
@@ -92,9 +96,13 @@ function EditOrphanage() {
     data.append('instructions', instructions);
     data.append('opening_hours', opening_hours);
     data.append('open_on_weekends', String(open_on_weekends));
-    data.append('accepted', String(true));
+    data.append('accepted', String(accepted));
 
-    images.forEach((image) => {
+    deletedImagesId.forEach((imageId) => {
+      data.append('deletedImagesId', imageId);
+    });
+
+    imagesFiles.forEach((image) => {
       data.append('images', image);
     });
 
@@ -114,7 +122,7 @@ function EditOrphanage() {
 
     const selectedImages = Array.from(event.target.files);
 
-    setImages(selectedImages);
+    setImagesFiles(selectedImages);
 
     const selectedImagesPreview = selectedImages.map((image) => {
       return URL.createObjectURL(image);
@@ -126,22 +134,6 @@ function EditOrphanage() {
 
     setPreviewImages(oldPreviewImages);
   }
-
-  useEffect(() => {
-    api.get(`orphanages/${params.id}`).then((response) => {
-      setOrphanage(response.data);
-
-      setLatitude(response.data.latitude);
-      setLongitude(response.data.longitude);
-      setName(response.data.name);
-      setAbout(response.data.about);
-      setInstructions(response.data.instructions);
-      setOpenOnWeekends(response.data.open_on_weekends);
-      setOpeningHours(response.data.opening_hours);
-      setImages(response.data.images);
-      setAccept(response.data.accepted);
-    });
-  }, [params.id]);
 
   function handleAddNewImage() {
     if (InputRef) InputRef.current?.click();
@@ -187,48 +179,70 @@ function EditOrphanage() {
           <Input label="Nome" value={name} setInput={setName} />
           <Input label="Sobre" value={about} setInput={setAbout} />
 
-          {orphanage.images && (
-            <div className="images">
-              <h2>Fotos</h2>
-              <div className="images-grid">
-                {orphanage.images.map((image, index) => (
-                  <div id="image" key={image.id}>
+          <div className="images">
+            <h2>Fotos</h2>
+            <div className="images-grid">
+              {images &&
+                images.map((image, index) => (
+                  <div id="image" key={index}>
                     <button
                       className="delete"
-                      onClick={() => handleDeleteImageFromOrphanage(index)}
+                      onClick={() => {
+                        const oldImages = images;
+
+                        oldImages.splice(index, 1);
+
+                        const oldDeletedIdArray = deletedImagesId;
+                        oldDeletedIdArray.push(image.id);
+                        setDeletedImagesId(oldDeletedIdArray);
+
+                        if (oldImages.length > 1) {
+                          setImages(oldImages);
+                          return;
+                        }
+
+                        setImages([]);
+                      }}
                     >
                       <FiX color="#FF669D" size="20px" />
                     </button>
-                    <img src={image.url} alt={orphanage.name} />
+                    <img src={image.url} alt={name} />
                   </div>
                 ))}
-                {previewImages &&
-                  previewImages.map((image, index) => {
-                    return (
-                      <div id="image" key={String(image)}>
-                        <button
-                          className="delete"
-                          onClick={() => handleDeleteImageFromPreview(index)}
-                        >
-                          <FiX color="#FF669D" size="20px" />
-                        </button>
-                        <img src={image} alt={orphanage.name} />
-                      </div>
-                    );
-                  })}
-                <button id="add" onClick={handleAddNewImage}>
-                  <input
-                    type="file"
-                    id="add-input"
-                    multiple
-                    onChange={handleSelectImage}
-                    ref={InputRef}
-                  />
-                  <FiPlus color="#15B6D6" size="20px" />
-                </button>
-              </div>
+
+              {previewImages &&
+                previewImages.map((image, index) => {
+                  console.log(image, index);
+                  return (
+                    <div id="image" key={String(image)}>
+                      <button
+                        className="delete"
+                        onClick={() => {
+                          const oldPreview = previewImages;
+
+                          oldPreview.splice(index, 1);
+
+                          setPreviewImages(oldPreview);
+                        }}
+                      >
+                        <FiX color="#FF669D" size="20px" />
+                      </button>
+                      <img src={image} alt={name} />
+                    </div>
+                  );
+                })}
+              <button id="add" onClick={handleAddNewImage}>
+                <input
+                  type="file"
+                  id="add-input"
+                  multiple
+                  onChange={handleSelectImage}
+                  ref={InputRef}
+                />
+                <FiPlus color="#15B6D6" size="20px" />
+              </button>
             </div>
-          )}
+          </div>
 
           <h2>Visitação</h2>
           <Input

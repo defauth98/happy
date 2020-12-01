@@ -74,7 +74,11 @@ export default function CreateOrphanage() {
       return URL.createObjectURL(image);
     });
 
-    setPreviewImages(selectedImagesPreview);
+    const oldPreviewImages = previewImages;
+
+    oldPreviewImages.push(selectedImagesPreview.toString());
+
+    setPreviewImages(oldPreviewImages);
   }
 
   return (

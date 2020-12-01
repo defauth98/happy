@@ -31,8 +31,7 @@
   border-bottom: 2px solid #d3e2e5;
 }
 
-#pending-orphanages .header h1,
-p {
+#pending-orphanages .header h1 {
   color: #4d6f80;
 }
 

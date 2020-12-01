@@ -22,7 +22,7 @@ const OrphanageItem: React.FC<OrphanageItem> = ({ orphanage }) => {
   const history = useHistory();
 
   function handleViewOrphanage() {
-    history.push(`pending/${orphanage.id}`);
+    history.push(`accept/${orphanage.id}`);
   }
 
   return (
