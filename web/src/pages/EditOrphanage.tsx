@@ -66,6 +66,7 @@ function EditOrphanage() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
+    console.log(accepted);
     const data = new FormData();
 
     data.append('name', name);
@@ -75,7 +76,7 @@ function EditOrphanage() {
     data.append('instructions', instructions);
     data.append('opening_hours', opening_hours);
     data.append('open_on_weekends', String(open_on_weekends));
-    data.append('accepted', String(accepted));
+    data.append('accepted', String(true));
 
     images.forEach((image) => {
       data.append('images', image);
@@ -87,7 +88,7 @@ function EditOrphanage() {
       alert('Erro ao tentar da update');
     }
 
-    history.push('/dashboard');
+    history.push('/dashboard ');
   }
 
   function handleSelectImage(event: ChangeEvent<HTMLInputElement>) {
@@ -103,7 +104,13 @@ function EditOrphanage() {
       return URL.createObjectURL(image);
     });
 
-    setPreviewImages(selectedImagesPreview);
+    const oldPreviewImages = previewImages;
+
+    oldPreviewImages.push(selectedImagesPreview.toString());
+
+    // console.log(oldPreviewImages);
+
+    setPreviewImages(oldPreviewImages);
   }
 
   useEffect(() => {
