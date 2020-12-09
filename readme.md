@@ -1,9 +1,5 @@
 <h1 align="center">Happy  </h1>
 
-<h2 align="center">
-
-</h2>
-
 <p align="justify">Plataforma WEB e Mobile, para pessoas encontrarem um orfanato para visitas, e fazerem o dia de uma criança mais feliz!</p>
 
 > Status do Projeto: :tractor: Em desenvolvimento
