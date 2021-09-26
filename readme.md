@@ -2,9 +2,7 @@
 
 <p align="justify">Plataforma WEB e Mobile, para pessoas encontrarem um orfanato para visitas, e fazerem o dia de uma criança mais feliz!</p>
 
-> Durante o evento foi desenvolvido a tela do mapa, juntamente com a criação do orfanato na plataforma. E depois que o evento foi nos dados alguns desafios que eu contrui para treinar minhas habilidades. Eu desenvolvi a dashboard administrativa com login via token jwt, listagem dos orfananatos cadastrados, tal como a edição e remoção dos mesmos. Também construí um fluxo de cadastros pendentes.
-
-<img src=".github/landing.png" alt="Happy">
+Durante o evento foi desenvolvido a tela do mapa, juntamente com a criação do orfanato na plataforma. E depois que o evento foi nos dados alguns desafios que eu contrui para treinar minhas habilidades. Eu desenvolvi a dashboard administrativa com login via token jwt, listagem dos orfananatos cadastrados, tal como a edição e remoção dos mesmos. Também construí um fluxo de cadastros pendentes.
 
 ### :computer: Novas funcionalidades (Versão 2.0)
 
