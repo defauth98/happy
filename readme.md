@@ -2,22 +2,16 @@
 
 <p align="justify">Plataforma WEB e Mobile, para pessoas encontrarem um orfanato para visitas, e fazerem o dia de uma criança mais feliz!</p>
 
-Durante o evento foi desenvolvido a tela do mapa, juntamente com a criação do orfanato na plataforma. E depois que o evento foi nos dados alguns desafios que eu contrui para treinar minhas habilidades. Eu desenvolvi a dashboard administrativa com login via token jwt, listagem dos orfananatos cadastrados, tal como a edição e remoção dos mesmos. Também construí um fluxo de cadastros pendentes.
+Durante o evento foi desenvolvido a tela do mapa, juntamente com a criação do orfanato na plataforma. E depois que o evento acabou foi nos dado alguns desafios que eu contrui para treinar minhas habilidades. Desenvolvi a dashboard administrativa com login via token jwt, listagem dos orfananatos cadastrados, tal como a edição e remoção dos mesmos. Também construí um fluxo de cadastros pendentes.
 
 ### :computer: Novas funcionalidades (Versão 2.0)
 
 - [x] Autenticação de usuários
-
 - [x] Recuperação de senhas
-
 - [x] Dashboard administrativa
-
 - [x] Listagem de todos os orfanatos cadastrados
-
 - [x] Listagem dos orfanatos pendentes
-
 - [x] Edição do orfanato
-
 - [x] Splash Screen no React Native
 
 ### :nut_and_bolt: Tecnologias
